@@ -1,0 +1,5 @@
+node_modules
+*.bak
+.git
+.DS_Store
+Thumbs.db

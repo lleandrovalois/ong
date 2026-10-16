@@ -1,0 +1,15 @@
+services:
+  web:
+    build: .
+    container_name: ong-patas-esperanca
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8087}:8080"
+    volumes:
+      - ./content.json:/app/content.json
+      - ./animals.json:/app/animals.json
+      - ./theme.json:/app/theme.json
+      - ./messages.json:/app/messages.json
+    environment:
+      - PORT=8080
+      - TZ=America/Sao_Paulo
