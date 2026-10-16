@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Patas & Esperança - Apoio e Resgate Animal</title>
+    <meta name="description" content="ONG dedicada ao resgate, reabilitação e acolhimento de cães e gatos em situação de abandono e vulnerabilidade. Faça sua doação e transforme vidas!">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary, #059669)',
+                        'primary-hover': 'var(--color-primary-hover, #047857)',
+                        secondary: 'var(--color-secondary, #0284c7)',
+                        accent: 'var(--color-accent, #f59e0b)',
+                        bgLight: 'var(--color-bg, #f8fafc)',
+                        textMain: 'var(--color-text, #0f172a)',
+                    },
+                    fontFamily: {
+                        heading: ['Outfit', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative selection:bg-emerald-500 selection:text-white">
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- BANNER DE CASO URGENTE (CONFIGURÁVEL NO CMS) -->
+    <div id="urgent-case-banner" class="bg-gradient-to-r from-amber-600 via-rose-600 to-amber-700 text-white text-xs sm:text-sm font-semibold py-2.5 px-4 shadow-md relative z-40 transition-all">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1 bg-white/20 px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wide uppercase">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-200"></i>
+                    <span id="urgent-badge">Urgência Médica</span>
+                </span>
+                <span id="urgent-title" class="font-bold">Apolo precisa de cirurgia ortopédica!</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span id="urgent-stats" class="text-xs text-white/90 hidden md:inline">R$ 1.550 de R$ 2.800 arrecadados</span>
+                <a href="#como-ajudar" class="bg-white text-rose-700 hover:bg-amber-50 px-3.5 py-1 rounded-full text-xs font-bold transition shadow-sm active:scale-95">
+                    Ajudar Agora <i class="fa-solid fa-arrow-right text-[10px] ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- BARRA DE NAVEGAÇÃO PRINCIPAL (STICKY) -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo & Nome da ONG -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-white shadow-md shadow-emerald-600/20 group-hover:scale-105 transition-transform" style="background-color: var(--color-primary)">
+                    <i class="fa-solid fa-paw text-xl"></i>
+                </div>
+                <div>
+                    <span id="nav-org-name" class="text-xl sm:text-2xl font-black font-heading tracking-tight block text-slate-900 group-hover:text-emerald-700 transition-colors">
+                        Patas & Esperança
+                    </span>
+                    <span id="nav-org-tagline" class="text-xs text-slate-500 font-medium block truncate max-w-[200px] sm:max-w-none">
+                        Amor, resgate e acolhimento animal
+                    </span>
+                </div>
+            </a>
+
+            <!-- Navegação Desktop -->
+            <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-600">
+                <a href="#sobre" id="nav-link-sobre" class="hover:text-emerald-600 transition-colors">Sobre Nós</a>
+                <a href="#como-ajudar" id="nav-link-doar" class="hover:text-emerald-600 transition-colors">Como Doar</a>
+                <a href="#animais" id="nav-link-animais" class="hover:text-emerald-600 transition-colors">Nossos Resgatados</a>
+                <a href="#transparencia" id="nav-link-transparencia" class="hover:text-emerald-600 transition-colors">Transparência</a>
+                <a href="#depoimentos" id="nav-link-depoimentos" class="hover:text-emerald-600 transition-colors">Finais Felizes</a>
+                <a href="#contato" id="nav-link-contato" class="hover:text-emerald-600 transition-colors">Voluntariado</a>
+            </nav>
+
+            <!-- Botões de Ação & Área Restrita -->
+            <div class="flex items-center gap-2.5">
+                <a href="#como-ajudar" class="px-4 sm:px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-xl transition-all duration-200 flex items-center gap-2 transform active:scale-95" style="background-color: var(--color-primary);">
+                    <i class="fa-solid fa-heart text-xs text-rose-300 animate-pulse"></i>
+                    <span>Doar Agora</span>
+                </a>
+                
+                <!-- Botão Admin -->
+                <button id="admin-auth-btn" onclick="handleAdminButtonClick()" class="px-3 sm:px-3.5 py-2 rounded-full border border-slate-300 hover:border-slate-400 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-inner" title="Painel Administrativo">
+                    <i class="fa-solid fa-lock text-slate-600" id="admin-btn-icon"></i>
+                    <span id="admin-btn-text" class="hidden sm:inline">CMS</span>
+                </button>
+
+                <!-- Botão Hambúrguer Mobile -->
+                <button onclick="toggleMobileNav()" class="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 border border-slate-200 transition" aria-label="Abrir Menu">
+                    <i class="fa-solid fa-bars text-lg" id="mobile-hamburger-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu Mobile Drawer / Dropdown -->
+        <div id="mobile-nav" class="hidden lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 py-4 space-y-3 shadow-lg">
+            <a href="#sobre" onclick="closeMobileNav()" class="block py-2 px-3 text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl transition">Sobre Nós</a>
+            <a href="#como-ajudar" onclick="closeMobileNav()" class="block py-2 px-3 text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl transition">Como Doar (PIX)</a>
+            <a href="#animais" onclick="closeMobileNav()" class="block py-2 px-3 text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl transition">Nossos Resgatados</a>
+            <a href="#transparencia" onclick="closeMobileNav()" class="block py-2 px-3 text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl transition">Transparência</a>
+            <a href="#depoimentos" onclick="closeMobileNav()" class="block py-2 px-3 text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl transition">Finais Felizes</a>
+            <a href="#contato" onclick="closeMobileNav()" class="block py-2 px-3 text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl transition">Voluntariado & Adoção</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        
+        <!-- HERO SECTION -->
+        <section id="hero" class="relative overflow-hidden py-14 sm:py-20 lg:py-28 bg-gradient-to-b from-emerald-50/60 via-white to-transparent">
+            <!-- Glow Background Efeito -->
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute top-1/2 -right-24 w-96 h-96 bg-amber-400/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Textos do Hero -->
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide border shadow-sm" style="background-color: rgba(5, 150, 105, 0.08); color: var(--color-primary); border-color: rgba(5, 150, 105, 0.25);">
+                            <i class="fa-solid fa-shield-cat text-sm"></i>
+                            <span id="hero-badge-text">ONG 100% Sem Fins Lucrativos</span>
+                        </div>
+                        
+                        <h1 id="hero-title" class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.12]">
+                            Transformando abandono em <span style="color: var(--color-primary);">amor, cuidado e dignidade</span>.
+                        </h1>
+
+                        <p id="hero-subtitle" class="text-base sm:text-lg lg:text-xl text-slate-600 max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                            Mais de 1.450 vidas resgatadas, tratadas e entregues a famílias amorosas. Sua doação é o combustível que salva patinhas todos os dias.
+                        </p>
+
+                        <!-- Botões de Ação Hero -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <a href="#como-ajudar" class="w-full sm:w-auto px-8 py-4 rounded-full text-white font-bold text-base shadow-lg hover:shadow-2xl transition duration-200 text-center flex items-center justify-center gap-2 group active:scale-95" style="background-color: var(--color-primary)">
+                                <span>Quero Salvar Vidas</span>
+                                <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1.5 transition-transform"></i>
+                            </a>
+                            <a href="#animais" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-slate-800 font-bold text-base border border-slate-300 hover:border-slate-400 hover:bg-slate-50 transition duration-200 text-center shadow-sm active:scale-95">
+                                Conhecer Nossos Aumigos
+                            </a>
+                        </div>
+
+                        <!-- Métricas de Impacto em Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-6 sm:pt-8 border-t border-slate-200/90">
+                            <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-slate-200/70 shadow-sm">
+                                <span id="stat-vidas" class="block text-2xl sm:text-3xl font-extrabold text-slate-900">+1.450</span>
+                                <span class="text-xs text-slate-500 font-medium">Vidas Salvas</span>
+                            </div>
+                            <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-slate-200/70 shadow-sm">
+                                <span id="stat-adocoes" class="block text-2xl sm:text-3xl font-extrabold text-slate-900">+680</span>
+                                <span class="text-xs text-slate-500 font-medium">Adoções Felizes</span>
+                            </div>
+                            <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-slate-200/70 shadow-sm">
+                                <span id="stat-racao" class="block text-2xl sm:text-3xl font-extrabold text-slate-900">3.2 Ton</span>
+                                <span class="text-xs text-slate-500 font-medium">Ração / Mês</span>
+                            </div>
+                            <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-slate-200/70 shadow-sm">
+                                <span id="stat-transparencia" class="block text-2xl sm:text-3xl font-extrabold text-emerald-600">100%</span>
+                                <span class="text-xs text-slate-500 font-medium">Prestação Pública</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Imagem Principal / Hero Card -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <div class="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-emerald-500 to-amber-300 opacity-30 blur-2xl -z-10 animate-pulse-glow"></div>
+                            <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white">
+                                <img id="hero-image" src="https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=900&q=80" alt="Cão e Gato acolhidos na ONG" class="w-full h-80 sm:h-96 object-cover transform hover:scale-105 transition duration-700" onerror="this.src='https://placehold.co/800x600/059669/ffffff?text=Patas+%26+Esperan%C3%A7a'">
+                                <div class="p-5 sm:p-6 bg-white">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                                            <span id="hero-card-badge" class="text-xs font-bold uppercase tracking-wider text-emerald-800">Resgate Ativo 24h</span>
+                                        </div>
+                                        <span class="text-xs text-slate-400 font-medium">Tratamentos Contínuos</span>
+                                    </div>
+                                    <p id="hero-card-quote" class="text-xs sm:text-sm font-semibold text-slate-800 leading-snug">"Cada apoio transforma dor e solidão em carinho, saúde e finais felizes."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO DE DOAÇÃO / ARRECADAÇÃO & PIX -->
+        <section id="como-ajudar" class="py-16 sm:py-24 bg-slate-900 text-white relative overflow-hidden">
+            <!-- Background Orbs -->
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <span class="text-emerald-400 font-bold text-xs tracking-widest uppercase">Ajude Agora • Sem Intermediários</span>
+                    <h2 id="donation-section-title" class="text-3xl sm:text-4xl font-extrabold mt-2 tracking-tight">Faça Sua Contribuição Salvar Uma Vida</h2>
+                    <p id="donation-section-subtitle" class="text-slate-400 mt-3 text-sm sm:text-base">Cada real arrecadado é revertido diretamente em ração especial, tratamentos cirúrgicos e vacinas éticas.</p>
+                </div>
+
+                <!-- Meta Financeira Atual com Barra Animada -->
+                <div class="max-w-3xl mx-auto bg-slate-800/80 p-6 rounded-2xl border border-slate-700/80 mb-10 shadow-2xl backdrop-blur">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
+                        <span class="text-sm font-semibold text-slate-300">Meta do Mês para Cuidados Veterinários & Ração</span>
+                        <span class="text-sm font-bold text-emerald-400">
+                            <span id="meta-atual-display">R$ 11.450</span> arrecadados de <span id="meta-alvo-display">R$ 18.000</span>
+                        </span>
+                    </div>
+                    <div class="w-full bg-slate-700/80 h-4 rounded-full overflow-hidden p-0.5">
+                        <div id="meta-progress-bar" class="bg-gradient-to-r from-emerald-500 to-amber-400 h-full rounded-full transition-all duration-1000" style="width: 63%;"></div>
+                    </div>
+                    <div class="flex justify-between items-center text-xs text-slate-400 mt-2">
+                        <span id="meta-percentual-text">63% da meta alcançada</span>
+                        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sincronizado em tempo real</span>
+                    </div>
+                </div>
+
+                <!-- Box Calculadora & QR Code PIX -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-5xl mx-auto">
+                    
+                    <!-- Calculadora e Valores -->
+                    <div class="lg:col-span-7 bg-white text-slate-900 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex gap-2 p-1 bg-slate-100 rounded-xl mb-6">
+                                <button onclick="setDonationFrequency('unica')" id="freq-unica-btn" class="flex-1 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition-all bg-white text-slate-900 shadow-sm">Doação Única</button>
+                                <button onclick="setDonationFrequency('mensal')" id="freq-mensal-btn" class="flex-1 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900">Mensal (Padrinho Fiel)</button>
+                            </div>
+
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Escolha o valor de apoio:</label>
+                            <div class="grid grid-cols-4 gap-2 sm:gap-3 mb-4">
+                                <button onclick="selectPresetValue(20)" class="val-preset-btn py-3 px-2 border-2 rounded-xl text-center font-bold text-slate-700 border-slate-200 hover:border-emerald-500 transition-all active:scale-95 text-xs sm:text-sm">R$ 20</button>
+                                <button onclick="selectPresetValue(50)" class="val-preset-btn py-3 px-2 border-2 border-emerald-500 bg-emerald-50/70 rounded-xl text-center font-bold text-emerald-800 transition-all active:scale-95 text-xs sm:text-sm">R$ 50</button>
+                                <button onclick="selectPresetValue(100)" class="val-preset-btn py-3 px-2 border-2 rounded-xl text-center font-bold text-slate-700 border-slate-200 hover:border-emerald-500 transition-all active:scale-95 text-xs sm:text-sm">R$ 100</button>
+                                <button onclick="selectPresetValue(200)" class="val-preset-btn py-3 px-2 border-2 rounded-xl text-center font-bold text-slate-700 border-slate-200 hover:border-emerald-500 transition-all active:scale-95 text-xs sm:text-sm">R$ 200</button>
+                            </div>
+
+                            <div class="relative mb-5">
+                                <span class="absolute left-4 top-3 text-slate-400 font-bold text-base">R$</span>
+                                <input type="number" id="custom-donation-input" value="50" min="5" oninput="handleCustomAmountInput(event)" class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl font-bold text-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            </div>
+
+                            <!-- Explicação de Impacto -->
+                            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs text-amber-900 mb-6 flex items-start gap-3">
+                                <div class="w-7 h-7 rounded-lg bg-amber-200 text-amber-800 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-bowl-food text-sm"></i>
+                                </div>
+                                <span id="impact-description" class="leading-relaxed font-medium">R$ 50 fornece ração super premium e antiparasitário para 1 cão por 15 dias.</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button onclick="copiarPixPrincipal()" class="w-full py-4 rounded-xl text-white font-bold text-base shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 active:scale-98" style="background-color: var(--color-primary)">
+                                <i class="fa-solid fa-copy"></i>
+                                <span id="copy-pix-btn-label">Copiar Chave PIX</span>
+                            </button>
+                            <span class="block text-center text-xs text-slate-400 mt-2.5">Sem intermediários. 100% da sua doação vai direto para a conta da ONG.</span>
+                        </div>
+                    </div>
+
+                    <!-- Dados PIX & QR Code -->
+                    <div class="lg:col-span-5 bg-slate-800/95 rounded-3xl p-6 sm:p-8 border border-slate-700 flex flex-col items-center justify-center text-center shadow-2xl">
+                        <div class="bg-white p-3 rounded-2xl shadow-xl mb-4 group relative">
+                            <img id="pix-qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=pix@patasesperanca.ong.br" alt="QR Code PIX da ONG" class="w-40 h-40 object-contain rounded-lg">
+                        </div>
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest">Chave Oficial PIX</span>
+                        <div class="flex items-center justify-between gap-2 mt-1 mb-4 bg-slate-900/90 px-3.5 py-2.5 rounded-xl border border-slate-700 w-full max-w-sm">
+                            <code id="pix-key-display" class="text-emerald-400 text-xs sm:text-sm font-mono truncate">pix@patasesperanca.ong.br</code>
+                            <button onclick="copiarPixPrincipal()" class="text-slate-400 hover:text-white p-1" title="Copiar Chave">
+                                <i class="fa-regular fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="text-left w-full text-xs text-slate-300 space-y-2 border-t border-slate-700/80 pt-4">
+                            <p><strong class="text-slate-400">Titular:</strong> <span id="bank-owner">Associação Beneficente Patas & Esperança</span></p>
+                            <p><strong class="text-slate-400">Banco:</strong> <span id="bank-name">260 - Nu Pagamentos / Banco Inter</span></p>
+                            <p><strong class="text-slate-400">CNPJ:</strong> <span id="bank-cnpj">12.345.678/0001-99</span></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO RESGATADOS / ADOÇÃO / APADRINHAMENTO -->
+        <section id="animais" class="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+                <div>
+                    <span class="text-emerald-700 font-bold text-xs uppercase tracking-wider block mb-1">Eles merecem uma chance</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">Nossos Resgatados Esperando Por Você</h2>
+                    <p class="text-slate-500 text-sm mt-1">Todos os animais são vacinados, castrados (ou com castração garantida) e vermifugados.</p>
+                </div>
+
+                <!-- Filtros por Espécie & Busca -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="filterAnimalSpecies('todos', event)" class="animal-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-900 text-white shadow-sm transition">Todos</button>
+                    <button onclick="filterAnimalSpecies('Cachorro', event)" class="animal-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-200 text-slate-700 hover:bg-slate-300 transition">Cães</button>
+                    <button onclick="filterAnimalSpecies('Gato', event)" class="animal-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-200 text-slate-700 hover:bg-slate-300 transition">Gatos</button>
+                    <button onclick="filterAnimalSpecies('Tratamento', event)" class="animal-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-200 text-slate-700 hover:bg-slate-300 transition">Em Tratamento</button>
+                </div>
+            </div>
+
+            <!-- Grid de Animais -->
+            <div id="animais-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
+                <!-- Preenchido dinamicamente via JS a partir do /api/animals -->
+            </div>
+        </section>
+
+        <!-- SEÇÃO SOBRE NÓS -->
+        <section id="sobre" class="py-20 sm:py-28 bg-slate-100/70 border-y border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span id="about-badge" class="text-emerald-700 font-bold text-xs uppercase tracking-wider block mb-2">Quem Somos</span>
+                        <h2 id="about-title" class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
+                            Uma corrente de amor e proteção construída por voluntários.
+                        </h2>
+                        
+                        <div id="about-paragraphs" class="text-slate-600 space-y-4 text-base leading-relaxed">
+                            <p>Fundada em 2018 por defensores da causa animal, a nossa missão sempre foi clara: resgatar animais em extrema vulnerabilidade, reabilitá-los com dignidade e inseri-los em famílias conscientes.</p>
+                            <p>Trabalhamos sem auxílio governamental contínuo. Nossas ações, rações de alta qualidade e cirurgias são sustentadas unicamente pela força dos doadores e voluntários.</p>
+                        </div>
+
+                        <!-- 3 Pilares -->
+                        <div id="about-pillars" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/90">
+                                <i class="fa-solid fa-truck-medical text-emerald-600 text-xl mb-2"></i>
+                                <h4 class="font-bold text-slate-800 text-sm">Resgate</h4>
+                                <p class="text-xs text-slate-500 mt-1">Busca ativa e acolhimento imediato.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/90">
+                                <i class="fa-solid fa-heart-pulse text-emerald-600 text-xl mb-2"></i>
+                                <h4 class="font-bold text-slate-800 text-sm">Reabilitação</h4>
+                                <p class="text-xs text-slate-500 mt-1">Vacinas, castração e carinho integral.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/90">
+                                <i class="fa-solid fa-house-chimney-user text-emerald-600 text-xl mb-2"></i>
+                                <h4 class="font-bold text-slate-800 text-sm">Adoção</h4>
+                                <p class="text-xs text-slate-500 mt-1">Lares avaliados com responsabilidade.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <img id="about-image" src="https://images.unsplash.com/photo-1593134257782-e89567b7718a?auto=format&fit=crop&w=900&q=80" alt="Equipe de Voluntários cuidando de cão resgatado" class="rounded-3xl shadow-2xl w-full h-[460px] object-cover" onerror="this.src='https://placehold.co/800x600/0284c7/ffffff?text=Equipe+Volunt%C3%A1ria'">
+                        <div class="absolute -bottom-6 -left-6 bg-white p-5 rounded-2xl shadow-2xl border border-slate-100 hidden sm:flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xl">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-extrabold text-slate-900">Prestação de Contas Pública</p>
+                                <p class="text-xs text-slate-500">Notas fiscais disponíveis mensalmente</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO TRANSPARÊNCIA -->
+        <section id="transparencia" class="py-20 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-emerald-700 font-bold text-xs uppercase tracking-wider">Compromisso e Seriedade</span>
+                <h2 id="transparency-title" class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">Onde Seu Dinheiro é Investido</h2>
+                <p id="transparency-subtitle" class="text-slate-500 text-sm sm:text-base mt-2">Veja a divisão contábil de despesas da instituição no último mês.</p>
+            </div>
+
+            <div id="transparency-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Preenchido dinamicamente via JS a partir do content.json -->
+            </div>
+        </section>
+
+        <!-- SEÇÃO FINAIS FELIZES / DEPOIMENTOS -->
+        <section id="depoimentos" class="py-20 bg-slate-50 border-t border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-emerald-700 font-bold text-xs uppercase tracking-wider">Finais Felizes</span>
+                    <h2 class="text-3xl font-extrabold text-slate-900 mt-1">Histórias Que Aquecem o Coração</h2>
+                    <p class="text-slate-500 text-sm mt-2">Veja como o carinho de uma família transforma vidas resgatadas.</p>
+                </div>
+
+                <div id="testimonials-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Preenchido dinamicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO FORMULÁRIO DE CONTATO / VOLUNTARIADO / ADOÇÃO -->
+        <section id="contato" class="py-20 bg-white border-t border-slate-200">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 p-8 sm:p-12">
+                    
+                    <div class="text-center max-w-xl mx-auto mb-8">
+                        <span class="text-emerald-700 font-bold text-xs uppercase tracking-wider">Junte-se à Nossa Causa</span>
+                        <h2 class="text-3xl font-extrabold text-slate-900 mt-1">Quer Adotar ou Ser Voluntário?</h2>
+                        <p class="text-slate-500 text-sm mt-2">Preencha o formulário abaixo. Nossos dados são salvos no sistema e nossa equipe entrará em contato via WhatsApp.</p>
+                    </div>
+
+                    <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Seu Nome Completo *</label>
+                                <input id="contact-name" type="text" required placeholder="Ex: Mariana Silva" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp / Telefone *</label>
+                                <input id="contact-phone" type="tel" required placeholder="(11) 98765-4321" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Seu E-mail</label>
+                                <input id="contact-email" type="email" placeholder="mariana@exemplo.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Animal de Interesse (Se houver)</label>
+                                <input id="contact-pet" type="text" placeholder="Ex: Thor, Luna, Chico..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tipo de Interesse *</label>
+                            <select id="contact-interest" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option value="Quero Adotar um Amiguinho">Quero Adotar um Amiguinho</option>
+                                <option value="Quero ser Voluntário no Abrigo">Quero ser Voluntário no Abrigo</option>
+                                <option value="Oferecer Lar Temporário (LT)">Oferecer Lar Temporário (LT)</option>
+                                <option value="Parceria Corporativa / Doação de Ração">Parceria Corporativa / Doação de Ração</option>
+                                <option value="Outro assunto">Outro assunto</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Mensagem (Conte um pouco sobre sua rotina ou intenção)</label>
+                            <textarea id="contact-message" rows="3" placeholder="Moro em casa com quintal telado e gostaria de saber mais sobre..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+                        </div>
+
+                        <button type="submit" id="contact-submit-btn" class="w-full py-4 rounded-xl text-white font-bold text-sm tracking-wide shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2" style="background-color: var(--color-primary)">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Enviar Mensagem com Amor</span>
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-14 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-white font-bold text-lg">
+                        <i class="fa-solid fa-paw text-emerald-400"></i>
+                        <span id="footer-org-name">Patas & Esperança</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Dedicados a salvar, recuperar e encontrar lares com amor para cães e gatos em situação de abandono e vulnerabilidade.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold text-sm mb-3">Links Rápidos</h5>
+                    <ul class="text-xs space-y-2">
+                        <li><a href="#como-ajudar" class="hover:text-white transition-colors">Doação via PIX</a></li>
+                        <li><a href="#animais" class="hover:text-white transition-colors">Animais para Adoção</a></li>
+                        <li><a href="#sobre" class="hover:text-white transition-colors">História e Missão</a></li>
+                        <li><a href="#transparencia" class="hover:text-white transition-colors">Prestação de Contas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold text-sm mb-3">Contato & Local</h5>
+                    <ul class="text-xs space-y-2">
+                        <li><i class="fa-regular fa-envelope mr-1.5 text-emerald-400"></i> <span id="footer-email">contato@patasesperanca.ong.br</span></li>
+                        <li><i class="fa-brands fa-whatsapp mr-1.5 text-emerald-400"></i> <span id="footer-phone">(11) 99123-4567</span></li>
+                        <li><i class="fa-solid fa-location-dot mr-1.5 text-emerald-400"></i> <span id="footer-location">São Paulo, SP</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold text-sm mb-3">Área Administrativa</h5>
+                    <p class="text-xs mb-3 text-slate-400">Edições salvas via API são refletidas instantaneamente em todos os celulares e computadores.</p>
+                    <button onclick="handleAdminButtonClick()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-bold border border-slate-700 transition flex items-center gap-2">
+                        <i class="fa-solid fa-lock" id="footer-admin-icon"></i>
+                        <span id="footer-admin-text">Acesso Restrito / CMS</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; <span id="year-copy">2026</span> <span id="footer-copy-name">Patas & Esperança</span>. Todos os direitos reservados.</p>
+                <div class="flex items-center gap-2 text-[11px] text-slate-400">
+                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span id="sync-status-indicator">Persistência em API Ativa (Multi-dispositivos)</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL DE LOGIN DO ADMINISTRADOR -->
+    <div id="login-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeLoginModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto mb-3 text-xl shadow-inner">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="text-2xl font-black text-slate-900">Acesso ao CMS</h3>
+                <p class="text-xs text-slate-500 mt-1">Gerencie textos, metas, fotos e animais com persistência em nuvem</p>
+            </div>
+
+            <!-- Dica de demonstração -->
+            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-5 text-xs text-emerald-900">
+                <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-emerald-600"></i> Credenciais de Administrador:</p>
+                <p class="mt-1 font-mono text-[11px]">admin@ongamoranimal.org / admin123</p>
+                <button type="button" onclick="fillDemoCredentials()" class="mt-2 text-[11px] text-emerald-700 underline font-semibold hover:text-emerald-900">
+                    Preencher automaticamente
+                </button>
+            </div>
+
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">E-mail do Administrador</label>
+                    <input type="email" id="login-email" required placeholder="admin@ongamoranimal.org" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Senha</label>
+                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+
+                <div id="login-error" class="hidden text-xs text-rose-600 font-medium bg-rose-50 p-2.5 rounded-lg border border-rose-200"></div>
+
+                <button type="submit" id="login-submit-btn" class="w-full py-3.5 rounded-xl text-white font-bold text-sm tracking-wide shadow-md hover:shadow-lg transition flex items-center justify-center gap-2" style="background-color: var(--color-primary)">
+                    <span>Entrar no Painel</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE DETALHES DE ANIMAL (ADOÇÃO / APADRINHAMENTO) -->
+    <div id="animal-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl relative">
+            <button onclick="closeAnimalModal()" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-animal-content"></div>
+        </div>
+    </div>
+
+    <!-- PAINEL ADMINISTRADOR CMS DRAWER -->
+    <div id="admin-drawer" class="fixed inset-y-0 right-0 w-full sm:w-[540px] bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-slate-200">
+        
+        <!-- Topo do Drawer -->
+        <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-900 text-white">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-sm shadow">
+                    <i class="fa-solid fa-sliders"></i>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-base leading-tight">Painel Administrativo CMS</h3>
+                    <p class="text-[11px] text-slate-400" id="admin-user-email">admin@ongamoranimal.org</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="handleLogout()" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-rose-900/40 text-xs font-semibold text-rose-300 border border-slate-700 transition flex items-center gap-1" title="Encerrar sessão de admin">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Sair</span>
+                </button>
+                <button onclick="closeAdminPanel()" class="text-slate-400 hover:text-white p-1 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Abas do CMS -->
+        <div class="flex border-b border-slate-200 bg-slate-50 text-[11px] sm:text-xs font-bold text-slate-600 overflow-x-auto">
+            <button onclick="switchAdminTab('tab-tema')" id="tab-btn-tema" class="admin-tab-btn flex-1 py-3 px-2 border-b-2 border-emerald-600 text-emerald-700 bg-white whitespace-nowrap">
+                <i class="fa-solid fa-palette mr-1"></i> Visual
+            </button>
+            <button onclick="switchAdminTab('tab-textos')" id="tab-btn-textos" class="admin-tab-btn flex-1 py-3 px-2 border-b-2 border-transparent hover:text-slate-900 whitespace-nowrap">
+                <i class="fa-solid fa-pen-nib mr-1"></i> Conteúdo
+            </button>
+            <button onclick="switchAdminTab('tab-animais')" id="tab-btn-animais" class="admin-tab-btn flex-1 py-3 px-2 border-b-2 border-transparent hover:text-slate-900 whitespace-nowrap">
+                <i class="fa-solid fa-dog mr-1"></i> Animais
+            </button>
+            <button onclick="switchAdminTab('tab-mensagens')" id="tab-btn-mensagens" class="admin-tab-btn flex-1 py-3 px-2 border-b-2 border-transparent hover:text-slate-900 whitespace-nowrap">
+                <i class="fa-solid fa-inbox mr-1"></i> Mensagens
+            </button>
+            <button onclick="switchAdminTab('tab-secoes')" id="tab-btn-secoes" class="admin-tab-btn flex-1 py-3 px-2 border-b-2 border-transparent hover:text-slate-900 whitespace-nowrap">
+                <i class="fa-solid fa-layer-group mr-1"></i> Seções
+            </button>
+        </div>
+
+        <!-- Conteúdo do CMS (Scrollable) -->
+        <div class="flex-grow overflow-y-auto p-5 space-y-6">
+
+            <!-- TAB 1: CORES E TEMA -->
+            <div id="tab-tema" class="admin-tab-content space-y-6">
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Paleta de Cores Dinâmica</h4>
+                    <div class="space-y-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <label class="text-sm font-semibold text-slate-800 block">Cor Primária</label>
+                                <span class="text-xs text-slate-500">Botões, destaques e ícones</span>
+                            </div>
+                            <input type="color" id="cfg-color-primary" oninput="liveColorChange()" class="w-10 h-10 rounded-lg cursor-pointer border-0 bg-transparent">
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <label class="text-sm font-semibold text-slate-800 block">Cor Secundária</label>
+                                <span class="text-xs text-slate-500">Elementos de contraste</span>
+                            </div>
+                            <input type="color" id="cfg-color-secondary" oninput="liveColorChange()" class="w-10 h-10 rounded-lg cursor-pointer border-0 bg-transparent">
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <label class="text-sm font-semibold text-slate-800 block">Cor de Destaque / Alerta</label>
+                                <span class="text-xs text-slate-500">Badges de urgência e metas</span>
+                            </div>
+                            <input type="color" id="cfg-color-accent" oninput="liveColorChange()" class="w-10 h-10 rounded-lg cursor-pointer border-0 bg-transparent">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Estilos Pré-definidos</h4>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="applyColorPreset('#059669', '#0284c7', '#f59e0b', 'Esperança')" class="p-2.5 rounded-xl border border-slate-200 text-left hover:border-emerald-500 transition">
+                            <div class="flex gap-1 mb-1">
+                                <div class="w-3.5 h-3.5 rounded-full bg-emerald-600"></div>
+                                <div class="w-3.5 h-3.5 rounded-full bg-sky-600"></div>
+                            </div>
+                            <span class="text-xs font-bold text-slate-800 block">Esperança</span>
+                        </button>
+                        <button onclick="applyColorPreset('#2563eb', '#7c3aed', '#ec4899', 'Amor Vivo')" class="p-2.5 rounded-xl border border-slate-200 text-left hover:border-blue-500 transition">
+                            <div class="flex gap-1 mb-1">
+                                <div class="w-3.5 h-3.5 rounded-full bg-blue-600"></div>
+                                <div class="w-3.5 h-3.5 rounded-full bg-purple-600"></div>
+                            </div>
+                            <span class="text-xs font-bold text-slate-800 block">Amor Vivo</span>
+                        </button>
+                        <button onclick="applyColorPreset('#ea580c', '#0d9488', '#eab308', 'Acolher')" class="p-2.5 rounded-xl border border-slate-200 text-left hover:border-orange-500 transition">
+                            <div class="flex gap-1 mb-1">
+                                <div class="w-3.5 h-3.5 rounded-full bg-orange-600"></div>
+                                <div class="w-3.5 h-3.5 rounded-full bg-teal-600"></div>
+                            </div>
+                            <span class="text-xs font-bold text-slate-800 block">Acolher</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Foto de Capa Principal (Hero)</h4>
+                    <input type="text" id="cfg-hero-image" oninput="liveHeroImageChange()" class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 font-mono" placeholder="https://exemplo.com/foto.jpg">
+                    <p class="text-[11px] text-slate-400 mt-1">Cole a URL de uma foto hospedada online (Unsplash, etc).</p>
+                </div>
+            </div>
+
+            <!-- TAB 2: TEXTOS, METAS E PIX -->
+            <div id="tab-textos" class="admin-tab-content space-y-5 hidden">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nome da ONG</label>
+                        <input type="text" id="cfg-org-name" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Slogan</label>
+                        <input type="text" id="cfg-org-tagline" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Título do Hero</label>
+                        <textarea id="cfg-hero-title" rows="2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Subtítulo Hero</label>
+                        <textarea id="cfg-hero-subtitle" rows="3" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea>
+                    </div>
+
+                    <!-- Métricas -->
+                    <div class="grid grid-cols-2 gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Vidas Salvas</label>
+                            <input type="text" id="cfg-stat-vidas" class="w-full px-2 py-1.5 rounded border border-slate-300 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Adoções Felizes</label>
+                            <input type="text" id="cfg-stat-adocoes" class="w-full px-2 py-1.5 rounded border border-slate-300 text-xs">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp Oficial</label>
+                        <input type="text" id="cfg-phone" placeholder="(11) 99123-4567" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">E-mail Oficial</label>
+                        <input type="email" id="cfg-email" placeholder="contato@ong.org.br" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                    </div>
+
+                    <!-- Configurações PIX & Arrecadação -->
+                    <div class="p-4 bg-emerald-50/70 border border-emerald-200 rounded-2xl space-y-3">
+                        <h5 class="text-xs font-bold text-emerald-900 uppercase">Configuração de Arrecadação PIX</h5>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700">Meta do Mês (R$)</label>
+                            <input type="number" id="cfg-meta-alvo" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700">Total Arrecadado até Hoje (R$)</label>
+                            <input type="number" id="cfg-meta-atual" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700">Chave PIX (E-mail, CNPJ ou Celular)</label>
+                            <input type="text" id="cfg-pix-key" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700">Razão Social / Titular da Conta</label>
+                            <input type="text" id="cfg-bank-owner" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700">CNPJ</label>
+                            <input type="text" id="cfg-bank-cnpj" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm">
+                        </div>
+                    </div>
+
+                    <!-- Configuração de Caso Urgente -->
+                    <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h5 class="text-xs font-bold text-amber-900 uppercase">Banner de Caso Urgente</h5>
+                            <input type="checkbox" id="cfg-urgent-active" class="w-4 h-4 rounded text-amber-600 focus:ring-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700">Título do Caso</label>
+                            <input type="text" id="cfg-urgent-title" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700">Meta (R$)</label>
+                                <input type="number" id="cfg-urgent-goal" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700">Arrecadado (R$)</label>
+                                <input type="number" id="cfg-urgent-raised" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: GERENCIADOR DE ANIMAIS -->
+            <div id="tab-animais" class="admin-tab-content space-y-5 hidden">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Animais no Sistema</h4>
+                        <span class="text-[11px] text-slate-400">Persistidos via API (animals.json)</span>
+                    </div>
+                    <button onclick="openAnimalFormModal()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1 shadow-sm">
+                        <i class="fa-solid fa-plus"></i> Novo Animal
+                    </button>
+                </div>
+
+                <div id="admin-animal-list" class="space-y-3">
+                    <div class="text-center py-6 text-slate-400 text-xs">Carregando animais...</div>
+                </div>
+            </div>
+
+            <!-- TAB 4: MENSAGENS RECEBIDAS / CAIXA DE ENTRADA -->
+            <div id="tab-mensagens" class="admin-tab-content space-y-4 hidden">
+                <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Candidaturas & Voluntários</h4>
+                    <button onclick="fetchAdminMessages()" class="text-xs text-emerald-600 hover:text-emerald-800 font-bold">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Atualizar
+                    </button>
+                </div>
+                <div id="admin-messages-list" class="space-y-3">
+                    <div class="text-center py-6 text-slate-400 text-xs">Carregando mensagens...</div>
+                </div>
+            </div>
+
+            <!-- TAB 5: GERENCIADOR DE SEÇÕES -->
+            <div id="tab-secoes" class="admin-tab-content space-y-4 hidden">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Visibilidade de Seções do Site</h4>
+                <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-sm">
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-slate-800 font-medium">Banner de Urgência Médica</span>
+                        <input type="checkbox" id="sec-toggle-urgente" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                    </label>
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-slate-800 font-medium">Seção de Doação / PIX</span>
+                        <input type="checkbox" id="sec-toggle-doacao" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                    </label>
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-slate-800 font-medium">Vitrine de Animais Resgatados</span>
+                        <input type="checkbox" id="sec-toggle-animais" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                    </label>
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-slate-800 font-medium">História e Sobre a ONG</span>
+                        <input type="checkbox" id="sec-toggle-sobre" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                    </label>
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-slate-800 font-medium">Prestação de Contas / Transparência</span>
+                        <input type="checkbox" id="sec-toggle-transparencia" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                    </label>
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-slate-800 font-medium">Finais Felizes / Depoimentos</span>
+                        <input type="checkbox" id="sec-toggle-depoimentos" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                    </label>
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-slate-800 font-medium">Formulário de Voluntariado / Contato</span>
+                        <input type="checkbox" id="sec-toggle-contato" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Rodapé do Drawer com Ação de Salvar na API -->
+        <div class="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
+            <span class="text-[11px] text-slate-500">Persistência via API (/api/save-content)</span>
+            <button onclick="saveAllConfigurationsToServer()" id="btn-save-cms" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-2 shadow-md active:scale-95">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Publicar em Todos os Dispositivos
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL FORMULÁRIO NOVO/EDITAR ANIMAL -->
+    <div id="animal-editor-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 id="animal-modal-title" class="font-bold text-slate-800 text-base">Cadastrar Amiguinho</h3>
+                <button onclick="closeAnimalFormModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleSaveAnimal(event)" class="space-y-3">
+                <input type="hidden" id="edit-animal-doc-id">
+                
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nome do Animal *</label>
+                    <input type="text" id="animal-form-name" required placeholder="Ex: Thor, Mel, Pipoca..." class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Espécie *</label>
+                        <select id="animal-form-species" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                            <option value="Cachorro">Cachorro</option>
+                            <option value="Gato">Gato</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Sexo *</label>
+                        <select id="animal-form-gender" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                            <option value="Macho">Macho</option>
+                            <option value="Fêmea">Fêmea</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Idade *</label>
+                        <input type="text" id="animal-form-age" required placeholder="Ex: 2 anos" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Porte / Peso *</label>
+                        <input type="text" id="animal-form-size" required placeholder="Ex: Porte Médio (14kg)" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Situação / Status *</label>
+                    <select id="animal-form-status" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                        <option value="Aguardando Adoção">Aguardando Adoção</option>
+                        <option value="Em Tratamento">Em Tratamento (Precisa Apadrinhar)</option>
+                        <option value="Lar Temporário">Lar Temporário</option>
+                        <option value="Adotado">Adotado (Final Feliz)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tag Curta / Destaque</label>
+                    <input type="text" id="animal-form-tag" placeholder="Ex: Dócil com crianças e gatos" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">URL da Foto *</label>
+                    <input type="text" id="animal-form-photo" required placeholder="https://images.unsplash.com/..." class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs font-mono">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">História / Detalhes de Resgate *</label>
+                    <textarea id="animal-form-desc" rows="3" required placeholder="Resgatado com ferimentos em rodovia, hoje é dócil..." class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2 border-t">
+                    <button type="button" onclick="closeAnimalFormModal()" class="px-4 py-2 rounded-xl text-slate-600 bg-slate-100 hover:bg-slate-200 text-xs font-bold">Cancelar</button>
+                    <button type="submit" id="btn-save-animal" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md">Salvar Animal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Principal da Aplicação -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Teste Automatizado",
+    "phone": "(11) 99999-8888",
+    "email": "teste@email.com",
+    "interest": "Quero Adotar um Amiguinho",
+    "petName": "Thor",
+    "message": "Teste de integridade de formulário",
+    "id": "msg-1792115454452",
+    "createdAt": "2026-10-16T01:50:54.452Z",
+    "status": "Pendente"
+  },
+  {
+    "id": "msg-1",
+    "name": "Mariana Silva",
+    "phone": "(11) 98765-4321",
+    "email": "mariana.silva@email.com",
+    "interest": "Quero Adotar um Amiguinho",
+    "petName": "Thor",
+    "message": "Olá! Temos uma casa com quintal gramado e telado, e estamos apaixonados pelo Thor. Gostaríamos de agendar uma visita!",
+    "createdAt": "2026-10-14T14:30:00.000Z",
+    "status": "Pendente"
+  },
+  {
+    "id": "msg-2",
+    "name": "Lucas Fernandes",
+    "phone": "(11) 97123-9988",
+    "email": "lucas.fernandes@email.com",
+    "interest": "Quero ser Voluntário no Abrigo",
+    "petName": "-",
+    "message": "Tenho disponibilidade aos sábados de manhã para ajudar nos passeios, banho ou limpeza das baias.",
+    "createdAt": "2026-10-15T09:15:00.000Z",
+    "status": "Respondido"
+  }
+]

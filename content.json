@@ -1,0 +1,144 @@
+{
+  "org": {
+    "name": "Patas & Esperança",
+    "tagline": "Amor, resgate e acolhimento animal",
+    "badge": "ONG 100% Sem Fins Lucrativos • Reconhecida de Utilidade Pública",
+    "foundedYear": "2018"
+  },
+  "hero": {
+    "title": "Transformando abandono em amor, cuidado e dignidade.",
+    "subtitle": "Mais de 1.450 vidas resgatadas, reabilitadas e acolhidas com dignidade e carinho.",
+    "image": "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=1200&q=80",
+    "badgeCard": "Resgate & Reabilitação Ativa 24h",
+    "quoteCard": "\"Cada apoio transforma dor e solidão em carinho, saúde e um novo lar para sempre.\""
+  },
+  "stats": {
+    "vidasSalvas": "+1.450",
+    "adocoesFelizes": "+680",
+    "racaoMes": "3.2 Ton",
+    "transparencia": "100%"
+  },
+  "urgentCase": {
+    "active": true,
+    "title": "Caso de Urgência: Apolo precisa de cirurgia ortopédica",
+    "desc": "Apolo foi atropelado e sofreu fratura na bacia. A cirurgia está agendada para esta semana e ainda faltam R$ 1.250 para custear os pinos e a anestesia.",
+    "goal": 2800,
+    "raised": 1550,
+    "petName": "Apolo",
+    "badge": "Urgência Médica"
+  },
+  "donation": {
+    "title": "Faça Sua Contribuição Salvar Uma Vida",
+    "subtitle": "Sem taxas intermediárias. 100% do valor doado vai direto para ração terapêutica, remédios, castrações e internações.",
+    "metaAlvo": 18000,
+    "metaAtual": 11450,
+    "pixKey": "pix@patasesperanca.ong.br",
+    "bankOwner": "Associação Beneficente Patas & Esperança",
+    "bankName": "260 - Nu Pagamentos / Banco Inter",
+    "bankCnpj": "12.345.678/0001-99",
+    "impactLevels": {
+      "20": "R$ 20 compra sachês úmidos de suporte e vermífugo para 1 filhote por 1 semana.",
+      "50": "R$ 50 fornece ração super premium e antiparasitário para 1 cão por 15 dias.",
+      "100": "R$ 100 financia vacinas essenciais (V10/V4) e consulta clínica de triagem com exames.",
+      "200": "R$ 200 cobre microchipagem, castração segura e pós-operatório completo de um animal resgatado."
+    }
+  },
+  "about": {
+    "badge": "Nossa Trajetória",
+    "title": "Uma corrente de proteção animal sustentada exclusivamente por voluntários.",
+    "paragraphs": [
+      "Nascemos em 2018 a partir do encontro de cinco voluntários independentes que não conseguiam mais fechar os olhos para animais agonizando nas ruas e rodovias da nossa região.",
+      "Não recebemos verbas governamentais contínuas nem financiamentos corporativos obrigatórios. Cada saco de ração, cada cirurgia de emergência e cada castração realizada é fruto direto da generosidade de pessoas comuns que acreditam que toda vida merece respeito e afeto."
+    ],
+    "image": "https://images.unsplash.com/photo-1593134257782-e89567b7718a?auto=format&fit=crop&w=1000&q=80",
+    "pillars": [
+      {
+        "title": "Resgate Técnico",
+        "desc": "Acolhimento responsável em situações de maus-tratos ou acidentes graves.",
+        "icon": "fa-truck-medical"
+      },
+      {
+        "title": "Tratamento Completo",
+        "desc": "Exames de sangue, vacinação ética, castração cirúrgica e reabilitação afetiva.",
+        "icon": "fa-heart-pulse"
+      },
+      {
+        "title": "Adoção Responsável",
+        "desc": "Entrevistas criteriosas, lares telados e termo formal de compromisso vitalício.",
+        "icon": "fa-house-chimney-user"
+      }
+    ]
+  },
+  "transparency": {
+    "title": "Onde Seu Dinheiro é Investido",
+    "subtitle": "Total integridade: veja a distribuição das despesas do último fechamento contábil.",
+    "expenses": [
+      {
+        "category": "Veterinário & Cirurgias",
+        "percentage": 52,
+        "desc": "Consultas especializadas, exames de sangue, internações 24h e cirurgias ortopédicas.",
+        "icon": "fa-stethoscope",
+        "color": "emerald"
+      },
+      {
+        "category": "Alimentação Especial",
+        "percentage": 28,
+        "desc": "Rações super premium com alta digestibilidade, leites para filhotes e dietas hipoalergênicas.",
+        "icon": "fa-bowl-food",
+        "color": "amber"
+      },
+      {
+        "category": "Manutenção do Abrigo",
+        "percentage": 12,
+        "desc": "Produtos desinfetantes hospitalares, água, energia, caminhas térmicas e infraestrutura.",
+        "icon": "fa-shield-heart",
+        "color": "sky"
+      },
+      {
+        "category": "Medicamentos & Vacinas",
+        "percentage": 8,
+        "desc": "Antipulgas de longa ação, vermífugos, antibióticos e vacinas importadas V10/V4.",
+        "icon": "fa-syringe",
+        "color": "purple"
+      }
+    ]
+  },
+  "testimonials": [
+    {
+      "name": "Camila & Família",
+      "pet": "Pipoca (Adotado há 1 ano)",
+      "text": "Adotar o Pipoca foi a melhor decisão das nossas vidas. Ele chegou com medo da própria sombra e hoje é o guardião mais doce da nossa casa e das crianças!",
+      "photo": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "name": "Rodrigo Mendes",
+      "pet": "Luna & Nino (Irmãos Gatinhos)",
+      "text": "A equipe da ONG nos deu todo suporte na adaptação dos dois. A transparência e o carinho com que tratam cada bichinho é de arrepiar.",
+      "photo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "name": "Dra. Beatriz Santos",
+      "pet": "Madrinha Mensal desde 2021",
+      "text": "Como médica, sei o custo de tratamentos de saúde. Acompanho a prestação de contas mensal e vejo cada centavo sendo multiplicado para salvar vidas.",
+      "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
+    }
+  ],
+  "contact": {
+    "phone": "(11) 99123-4567",
+    "whatsapp": "5511991234567",
+    "email": "contato@patasesperanca.ong.br",
+    "location": "São Paulo, SP - Atendimento com agendamento",
+    "hours": "Sábados e Domingos das 10h às 16h (Visitas agendadas)",
+    "instagram": "@patasesperanca.ong"
+  },
+  "sections": {
+    "urgente": true,
+    "doacao": true,
+    "animais": true,
+    "sobre": true,
+    "transparencia": true,
+    "depoimentos": true,
+    "contato": true
+  },
+  "updatedAt": "2026-10-16T02:00:24.568Z"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "ong-patas-esperanca",
+  "version": "1.0.0",
+  "description": "Patas & Esperança - Landing Page e Sistema CMS para ONG de Apoio Animal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "ong",
+    "animais",
+    "adocao",
+    "resgate",
+    "cms",
+    "landing-page"
+  ],
+  "author": "Patas & Esperança",
+  "license": "ISC"
+}
